@@ -5,12 +5,16 @@ import { readFileSync } from "fs";
 // Since we're using ES Modules, .js extension needs to be added to imports
 import { Resolvers } from "./generated/graphql.js";
 import { queries } from "./queries.js";
+import { mutations } from "./mutations.js";
 
-const typeDefs = readFileSync("../schema/schema.graphql", { encoding: "utf-8" });
+const typeDefs = readFileSync("../schema/schema.graphql", {
+  encoding: "utf-8",
+});
 
 // Resolvers define how to fetch the types defined in your schema.
 const resolvers: Resolvers = {
   Query: queries,
+  Mutation: mutations,
 };
 
 // The ApolloServer constructor requires two parameters: your schema

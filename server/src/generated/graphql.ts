@@ -16,19 +16,39 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  placeOrder: Order;
+};
+
+
+export type MutationPlaceOrderArgs = {
+  order: OrderInput;
+};
+
 export type Order = {
   __typename?: 'Order';
   customerId: Scalars['String']['output'];
   orderId: Scalars['ID']['output'];
   products: Array<OrderedProduct>;
   timestamp: Scalars['String']['output'];
-  totalSum: Scalars['Int']['output'];
+  totalSum: Scalars['Float']['output'];
+};
+
+export type OrderInput = {
+  customerId: Scalars['ID']['input'];
+  products: Array<OrderedProductInput>;
 };
 
 export type OrderedProduct = {
   __typename?: 'OrderedProduct';
   amount: Scalars['Int']['output'];
   ean: Scalars['String']['output'];
+};
+
+export type OrderedProductInput = {
+  amount: Scalars['Int']['input'];
+  ean: Scalars['String']['input'];
 };
 
 export type Product = {
@@ -125,8 +145,11 @@ export type ResolversTypes = {
   Float: ResolverTypeWrapper<Scalars['Float']['output']>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
+  Mutation: ResolverTypeWrapper<{}>;
   Order: ResolverTypeWrapper<Order>;
+  OrderInput: OrderInput;
   OrderedProduct: ResolverTypeWrapper<OrderedProduct>;
+  OrderedProductInput: OrderedProductInput;
   Product: ResolverTypeWrapper<Product>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
@@ -138,11 +161,18 @@ export type ResolversParentTypes = {
   Float: Scalars['Float']['output'];
   ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
+  Mutation: {};
   Order: Order;
+  OrderInput: OrderInput;
   OrderedProduct: OrderedProduct;
+  OrderedProductInput: OrderedProductInput;
   Product: Product;
   Query: {};
   String: Scalars['String']['output'];
+};
+
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  placeOrder?: Resolver<ResolversTypes['Order'], ParentType, ContextType, RequireFields<MutationPlaceOrderArgs, 'order'>>;
 };
 
 export type OrderResolvers<ContextType = any, ParentType extends ResolversParentTypes['Order'] = ResolversParentTypes['Order']> = {
@@ -150,7 +180,7 @@ export type OrderResolvers<ContextType = any, ParentType extends ResolversParent
   orderId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   products?: Resolver<Array<ResolversTypes['OrderedProduct']>, ParentType, ContextType>;
   timestamp?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  totalSum?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  totalSum?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -174,6 +204,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 };
 
 export type Resolvers<ContextType = any> = {
+  Mutation?: MutationResolvers<ContextType>;
   Order?: OrderResolvers<ContextType>;
   OrderedProduct?: OrderedProductResolvers<ContextType>;
   Product?: ProductResolvers<ContextType>;

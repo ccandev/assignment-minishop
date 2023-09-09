@@ -1,4 +1,5 @@
-import { Order } from "./generated/graphql";
+import { Order, OrderInput } from "./generated/graphql";
+import { products as productsDb } from "./productDatabase.js";
 
 export const orders: Omit<Order, "totalSum">[] = [
   {
@@ -32,3 +33,28 @@ export const orders: Omit<Order, "totalSum">[] = [
     ],
   },
 ];
+
+export const addOrder = ({ customerId, products }: OrderInput): Order => {
+  const lastOrderId = orders[orders.length - 1].orderId;
+
+  const newOrderId = `order-${Number(lastOrderId.split("-")[1]) + 1}`;
+  const newOrderDate = new Date().toISOString();
+
+  const newOrder: Omit<Order, "totalSum"> = {
+    orderId: newOrderId,
+    timestamp: newOrderDate,
+    customerId,
+    products,
+  };
+
+  orders.push(newOrder);
+
+  return {
+    ...newOrder,
+    totalSum: products.reduce((sum, product) => {
+      const { ean, amount } = product;
+      const price = productsDb.find((p) => p.ean === ean)?.price || 0;
+      return sum + price * amount;
+    }, 0),
+  };
+};

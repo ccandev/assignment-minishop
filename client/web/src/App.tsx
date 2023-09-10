@@ -1,6 +1,7 @@
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import CssBaseline from "@mui/material/CssBaseline";
 import {
+  Alert,
   AppBar,
   Button,
   Container,
@@ -8,6 +9,7 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  Snackbar,
   Toolbar,
   Typography,
 } from "@mui/material";
@@ -20,6 +22,7 @@ export function App() {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+  const [isSnackBarOpen, setIsSnackBarOpen] = React.useState(false);
   const { shoppingBasket, addItem, removeItem, clearBasket } =
     useShoppingBasket();
 
@@ -31,12 +34,24 @@ export function App() {
     setAnchorEl(null);
   };
 
+  const handleSnackBarClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setIsSnackBarOpen(false);
+  };
+
   const handleOrdersClick = () => {
     handleClose();
     navigate("/orders");
   };
 
   const handleOrderSuccess = () => {
+    setIsSnackBarOpen(true);
     setIsDrawerOpen(false);
     navigate("/orders");
     clearBasket();
@@ -102,6 +117,20 @@ export function App() {
           handleSuccess={handleOrderSuccess}
         />
       </Drawer>
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        open={isSnackBarOpen}
+        onClose={handleSnackBarClose}
+        autoHideDuration={3000}
+      >
+        <Alert
+          onClose={handleSnackBarClose}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Order received!
+        </Alert>
+      </Snackbar>
     </>
   );
 }

@@ -33,7 +33,7 @@ export function ProductCard({
         <Typography gutterBottom variant="h5" component="div">
           {name}
         </Typography>
-        <Typography variant="body2">{price}</Typography>
+        <Typography variant="body2">{`€${price.toFixed(2)}`}</Typography>
       </CardContent>
       <CardActions>
         <Button

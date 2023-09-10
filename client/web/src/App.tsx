@@ -1,6 +1,9 @@
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import CssBaseline from "@mui/material/CssBaseline";
 import {
   AppBar,
   Button,
+  Container,
   Drawer,
   IconButton,
   Menu,
@@ -8,11 +11,10 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import React, { useCallback } from "react";
+import React from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import { useShoppingBasket } from "./ShoppingBasket/useShoppingBasket";
 import { ShoppingBasket } from "./ShoppingBasket/ShoppingBasket";
+import { useShoppingBasket } from "./ShoppingBasket/useShoppingBasket";
 
 export function App() {
   const navigate = useNavigate();
@@ -42,9 +44,15 @@ export function App() {
 
   return (
     <>
+      <CssBaseline />
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1 }}
+            onClick={() => navigate("/")}
+          >
             Minishop
           </Typography>
           {shoppingBasket.length > 0 && (
@@ -81,7 +89,9 @@ export function App() {
           </Menu>
         </Toolbar>
       </AppBar>
-      <Outlet context={{ shoppingBasket, addItem, removeItem }} />
+      <Container maxWidth="md">
+        <Outlet context={{ shoppingBasket, addItem, removeItem }} />
+      </Container>
       <Drawer
         anchor="right"
         open={isDrawerOpen}

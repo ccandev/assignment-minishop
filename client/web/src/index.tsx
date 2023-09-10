@@ -3,7 +3,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { Store } from "./Store";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Orders } from "./Orders";
+import { Orders } from "./Pages/Orders";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import { App } from "./App";

@@ -21,7 +21,7 @@ const ordersQuery = gql(`
 export function Orders() {
   const { loading, data } = useQuery(ordersQuery, {
     fetchPolicy: "cache-and-network",
-    variables: { customerId: "user-1" },
+    variables: { customerId: "customer-1" },
   });
 
   return (

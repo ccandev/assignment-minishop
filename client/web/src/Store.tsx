@@ -6,7 +6,7 @@ import { gql } from "../../generated";
 import { ProductCard } from "./ProductCard";
 import { useShoppingBasket } from "./ShoppingBasket/useShoppingBasket";
 
-const getProductsQuery = gql(`
+export const getProductsQuery = gql(`
   query getProducts {
     products {
       ean

@@ -6,6 +6,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { ChevronRight, ShoppingBagOutlined } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 interface OrderSummaryProps {
   orderId: string;
@@ -18,10 +19,11 @@ export function OrderSummary({
   timestamp,
   totalSum,
 }: OrderSummaryProps) {
+  const navigate = useNavigate();
   const formattedOrderDate = new Date(timestamp).toLocaleString();
 
   return (
-    <ListItem disablePadding>
+    <ListItem disablePadding onClick={() => navigate(orderId)}>
       <ListItemButton>
         <ListItemIcon>
           <ShoppingBagOutlined />

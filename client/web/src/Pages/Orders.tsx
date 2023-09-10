@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { Box, List, Typography } from "@mui/material";
+import { Box, List, Skeleton, Typography } from "@mui/material";
 import React from "react";
 import { gql } from "../../../generated";
 import { OrderSummary } from "../Components/OrderSummary/OrderSummary";
@@ -33,7 +33,18 @@ export function Orders() {
       </Box>
 
       {loading ? (
-        <p>Loading orders...</p>
+        <Box
+          sx={{
+            marginTop: "1rem",
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+          }}
+        >
+          <Skeleton animation="wave" variant="rectangular" height={60} />
+          <Skeleton animation="wave" variant="rectangular" height={60} />
+          <Skeleton animation="wave" variant="rectangular" height={60} />
+        </Box>
       ) : (
         <List>
           {data?.orders?.map((order) => (

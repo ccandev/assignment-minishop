@@ -26,6 +26,7 @@ input OrderedProductInput {
 type Query {
   products: [Product!]!
   orders(customerId: ID!): [Order!]!
+  order(orderId: ID!): Order
 }
 
 input OrderInput {

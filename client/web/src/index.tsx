@@ -7,6 +7,7 @@ import { Orders } from "./Pages/Orders";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import { App } from "./App";
+import { OrderDetails } from "./Components/OrderDetails/OrderDetails";
 
 const gqlClient = new ApolloClient({
   uri: "http://localhost:4000",
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "orders/",
         element: <Orders />,
+      },
+      {
+        path: "orders/:orderId",
+        element: <OrderDetails />,
       },
     ],
   },

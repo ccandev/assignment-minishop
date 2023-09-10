@@ -58,3 +58,9 @@ export const addOrder = ({ customerId, products }: OrderInput): Order => {
     }, 0),
   };
 };
+
+export const getOrderByOrderId = (
+  orderId: string
+): Omit<Order, "totalSum"> | undefined => {
+  return orders.find((order) => order.orderId === orderId);
+};

@@ -29,7 +29,9 @@ export const ShoppingBasket = ({
   const [placeOrder, { data }] = useMutation<PlaceOrderMutation>(orderMutation);
 
   const handleConfirm = () => {
-    placeOrder({ variables: { order: { customerId: "user-1", products } } });
+    placeOrder({
+      variables: { order: { customerId: "customer-1", products } },
+    });
   };
   useEffect(() => {
     if (data) {

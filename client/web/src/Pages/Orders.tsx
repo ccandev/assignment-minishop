@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { Box, List, Skeleton, Typography } from "@mui/material";
+import { Box, List, Paper, Skeleton, Typography } from "@mui/material";
 import React from "react";
 import { gql } from "../../../generated";
 import { OrderSummary } from "../Components/OrderSummary/OrderSummary";
@@ -25,38 +25,40 @@ export function Orders() {
   });
 
   return (
-    <Box sx={{ marginTop: "2rem" }}>
-      <Box sx={{ borderBottom: 1 }}>
-        <Typography variant="h5" sx={{ fontWeight: 700 }}>
-          Order History
-        </Typography>
-      </Box>
-
-      {loading ? (
-        <Box
-          sx={{
-            marginTop: "1rem",
-            display: "flex",
-            flexDirection: "column",
-            gap: "1rem",
-          }}
-        >
-          <Skeleton animation="wave" variant="rectangular" height={60} />
-          <Skeleton animation="wave" variant="rectangular" height={60} />
-          <Skeleton animation="wave" variant="rectangular" height={60} />
+    <Paper variant="elevation">
+      <Box sx={{ marginTop: "2rem" }}>
+        <Box sx={{ borderBottom: 1 }}>
+          <Typography variant="h5" sx={{ fontWeight: 700, padding: "1rem" }}>
+            Order History
+          </Typography>
         </Box>
-      ) : (
-        <List>
-          {data?.orders?.map((order) => (
-            <OrderSummary
-              key={order.orderId}
-              orderId={order.orderId}
-              timestamp={order.timestamp}
-              totalSum={order.totalSum}
-            />
-          ))}
-        </List>
-      )}
-    </Box>
+
+        {loading ? (
+          <Box
+            sx={{
+              marginTop: "1rem",
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
+            }}
+          >
+            <Skeleton animation="wave" variant="rectangular" height={60} />
+            <Skeleton animation="wave" variant="rectangular" height={60} />
+            <Skeleton animation="wave" variant="rectangular" height={60} />
+          </Box>
+        ) : (
+          <List>
+            {data?.orders?.map((order) => (
+              <OrderSummary
+                key={order.orderId}
+                orderId={order.orderId}
+                timestamp={order.timestamp}
+                totalSum={order.totalSum}
+              />
+            ))}
+          </List>
+        )}
+      </Box>
+    </Paper>
   );
 }

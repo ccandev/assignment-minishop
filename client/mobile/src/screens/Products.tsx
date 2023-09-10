@@ -13,6 +13,7 @@ const getProductsQuery = gql(`
       ean
       name
       price
+      imageUrl
     }
   }
 `);

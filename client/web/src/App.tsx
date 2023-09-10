@@ -4,6 +4,7 @@ import {
   Alert,
   AppBar,
   Button,
+  Chip,
   Container,
   Drawer,
   IconButton,
@@ -13,10 +14,13 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useMemo } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { ShoppingBasket } from "./ShoppingBasket/ShoppingBasket";
 import { useShoppingBasket } from "./ShoppingBasket/useShoppingBasket";
+import { useQuery } from "@apollo/client";
+import { getProductsQuery } from "./Store";
+import { GetProductsQuery } from "../../generated/graphql";
 
 export function App() {
   const navigate = useNavigate();
@@ -25,6 +29,25 @@ export function App() {
   const [isSnackBarOpen, setIsSnackBarOpen] = React.useState(false);
   const { shoppingBasket, addItem, removeItem, clearBasket } =
     useShoppingBasket();
+
+  const { data: productsData } = useQuery<GetProductsQuery>(getProductsQuery);
+
+  const totalItemCount = useMemo(() => {
+    return shoppingBasket.reduce((sum, item) => {
+      return sum + item.amount;
+    }, 0);
+  }, [shoppingBasket]);
+
+  const totalSum = useMemo(() => {
+    return shoppingBasket.reduce((sum, item) => {
+      return (
+        sum +
+        (productsData?.products.find((product) => product.ean === item.ean)
+          ?.price ?? 0) *
+          item.amount
+      );
+    }, 0);
+  }, [shoppingBasket]);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -60,19 +83,34 @@ export function App() {
   return (
     <>
       <CssBaseline />
-      <AppBar position="static">
+      <AppBar position="static" sx={{ background: "white" }}>
         <Toolbar>
           <Typography
+            color="green"
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1 }}
+            sx={{ flexGrow: 1, fontWeight: 700 }}
             onClick={() => navigate("/")}
           >
             Minishop
           </Typography>
           {shoppingBasket.length > 0 && (
-            <Button variant="contained" onClick={() => setIsDrawerOpen(true)}>
-              View Order
+            <Button
+              size="small"
+              variant="contained"
+              onClick={() => setIsDrawerOpen(true)}
+              sx={{ marginRight: "1rem", textTransform: "unset" }}
+            >
+              <Chip
+                label={totalItemCount}
+                size="small"
+                color="info"
+                sx={{ marginRight: "1rem" }}
+              />
+              <Typography variant="body2" sx={{ marginRight: "2rem" }}>
+                View Order
+              </Typography>
+              <Typography variant="body2">€{totalSum.toFixed(2)}</Typography>
             </Button>
           )}
           <IconButton
@@ -81,7 +119,7 @@ export function App() {
             aria-controls="menu-appbar"
             aria-haspopup="true"
             onClick={handleMenu}
-            color="inherit"
+            color="primary"
           >
             <AccountCircle />
           </IconButton>

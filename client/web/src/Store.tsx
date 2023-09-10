@@ -1,8 +1,10 @@
 import { useQuery } from "@apollo/client";
+import { Typography } from "@mui/material";
 import React from "react";
-import { Link } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import { gql } from "../../generated";
 import { ProductCard } from "./ProductCard";
+import { useShoppingBasket } from "./ShoppingBasket/useShoppingBasket";
 
 const getProductsQuery = gql(`
   query getProducts {
@@ -15,6 +17,9 @@ const getProductsQuery = gql(`
 `);
 
 export function Store() {
+  const { addItem, removeItem } =
+    useOutletContext<ReturnType<typeof useShoppingBasket>>();
+
   const { loading, data } = useQuery(getProductsQuery);
 
   const displayData = () => {
@@ -28,15 +33,15 @@ export function Store() {
         name={product.name}
         ean={product.ean}
         price={product.price}
+        addToBasket={addItem}
+        removeFromBasket={removeItem}
       />
     ));
   };
 
   return (
     <>
-      <h1>Minishop</h1>
-      <Link to="/orders">My orders</Link>
-      <h2>Available products</h2>
+      <Typography variant="h2">Available products</Typography>
       {loading ? <p>Loading products...</p> : displayData()}
     </>
   );

@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Orders } from "./Orders";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
+import { App } from "./App";
 
 const gqlClient = new ApolloClient({
   uri: "http://localhost:4000",
@@ -18,11 +19,17 @@ loadErrorMessages();
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Store />,
-  },
-  {
-    path: "orders/",
-    element: <Orders />,
+    element: <App />,
+    children: [
+      {
+        index: true,
+        element: <Store />,
+      },
+      {
+        path: "orders/",
+        element: <Orders />,
+      },
+    ],
   },
 ]);
 

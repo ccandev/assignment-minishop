@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import { ShoppingBasket } from "./ShoppingBasket.types";
-import { OrderedProduct } from "../../../generated/graphql";
+import { OrderedProduct } from "../../../../generated/graphql";
 
 export const useShoppingBasket = () => {
   const [state, setState] = useState<ShoppingBasket>([]);

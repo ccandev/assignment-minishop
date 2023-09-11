@@ -2,9 +2,9 @@ import { gql, useQuery } from "@apollo/client";
 import { Box, Container, Typography } from "@mui/material";
 import React from "react";
 import { useOutletContext } from "react-router-dom";
-import { ProductCard } from "./ProductCard";
-import { useShoppingBasket } from "./ShoppingBasket/useShoppingBasket";
-import { GetProductsQuery } from "../../generated/graphql";
+import { ProductCard } from "../Components/ProductCard/ProductCard";
+import { useShoppingBasket } from "../Components/ShoppingBasket/useShoppingBasket";
+import { GetProductsQuery } from "../../../generated/graphql";
 
 export const getProductsQuery = gql(`
   query getProducts {

@@ -14,8 +14,8 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 import {
   GetProductsQuery,
   PlaceOrderMutation,
-} from "../../../generated/graphql";
-import { getProductsQuery } from "../Store";
+} from "../../../../generated/graphql";
+import { getProductsQuery } from "../../Pages/Store";
 
 const orderMutation = gql(`
 	mutation PlaceOrder($order: OrderInput!) {

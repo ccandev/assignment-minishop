@@ -15,8 +15,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   GetOrderDetailsQuery,
   GetProductsQuery,
-} from "../../../../generated/graphql";
-import { getProductsQuery } from "../../Store";
+} from "../../../generated/graphql";
+import { getProductsQuery } from "./Store";
 
 const getOrderDetailsQuery = gql(`
   query getOrderDetails($orderId: ID!) {

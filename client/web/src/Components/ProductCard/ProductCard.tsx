@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import React from "react";
-import { OrderedProduct } from "../../generated/graphql";
+import { OrderedProduct } from "../../../../generated/graphql";
 
 type Props = {
   name: string;

@@ -16,10 +16,10 @@ import {
 } from "@mui/material";
 import React, { useMemo } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { ShoppingBasket } from "./ShoppingBasket/ShoppingBasket";
-import { useShoppingBasket } from "./ShoppingBasket/useShoppingBasket";
+import { ShoppingBasket } from "./Components/ShoppingBasket/ShoppingBasket";
+import { useShoppingBasket } from "./Components/ShoppingBasket/useShoppingBasket";
 import { useQuery } from "@apollo/client";
-import { getProductsQuery } from "./Store";
+import { getProductsQuery } from "./Pages/Store";
 import { GetProductsQuery } from "../../generated/graphql";
 
 export function App() {
